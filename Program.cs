@@ -110,7 +110,7 @@ namespace ArrayOperations
             {
                 do
                 {
-                    Console.WriteLine("Would you like to use the existing array? [Y/N] \n");
+                    Console.WriteLine("\nWould you like to use the existing array? [Y/N] \n");
                     switch (Console.ReadLine().ToUpper())
                     {
                         case "Y":
@@ -138,7 +138,7 @@ namespace ArrayOperations
 
             do
             {
-                Console.WriteLine("Would you like to find the first occurence of your search value? [Y/N] \n");
+                Console.WriteLine("\nWould you like to find the first occurence of your search value? [Y/N] \n");
                 switch (Console.ReadLine().ToUpper())
                 {
                     case "Y":
@@ -305,7 +305,7 @@ namespace ArrayOperations
             Console.WriteLine($"The search value was {sVal}.");
             if (searchReturn.Item1 == occ)
             {
-                searchOutput = $"Occurence {occ} of the search value was found at array index {searchReturn.Item1}.";                
+                searchOutput = $"Occurence {occ} of the search value was found at array index {searchReturn.Item2}.";                
             }
             else if (searchReturn.Item2 >= 0)
             {                
@@ -332,7 +332,7 @@ namespace ArrayOperations
             Console.WriteLine($"The search value was {sVal}.");
             if (searchReturn.Item1 == occ)
             {
-                searchOutput = $"Occurence {occ} of the search value was found at array index {searchReturn.Item1}.";
+                searchOutput = $"Occurence {occ} of the search value was found at array index {searchReturn.Item2}.";
             }
             else if (searchReturn.Item2 >= 0)
             {

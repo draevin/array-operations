@@ -21,7 +21,7 @@ namespace ArrayOperations
 
             foreach (int i in ar)
             {
-                ar[iter] = rand.Next(max);
+                ar[iter] = rand.Next(max+1);
                 iter++;
             }
 
@@ -32,7 +32,7 @@ namespace ArrayOperations
         {
             int r;
 
-            r = rand.Next(maxVal);
+            r = rand.Next(maxVal+1);
 
             return r;
         }
