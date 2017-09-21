@@ -5,12 +5,12 @@ Developed as an early part of a Data Structures and Algorithms course project. (
 Description
 -----------
   Using a simple console menu, this application provides access to a variety of array operations, including:
-    - Sequential search (unsorted)
-      - For a given value
-      - For a given occurence of a given value
-    - Minimum sequential search (unsorted)
-    - Maximum sequential search (unsorted)
-    - Bubble sort
+  * Sequential search (unsorted)
+    * For a given value
+    * For a given occurence of a given value
+  * Minimum sequential search (unsorted)
+  * Maximum sequential search (unsorted)
+  * Bubble sort
 
 
 Background
@@ -26,3 +26,8 @@ Controls
   
   
 If you have any questions or any issues regarding the code, feel free to contact me using the information on my profile. 
+
+          * Bullet list
+              * Nested bullet
+                  * Sub-nested bullet etc
+          * Bullet list item 2
