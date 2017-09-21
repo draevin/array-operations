@@ -26,8 +26,3 @@ Controls
   
   
 If you have any questions or any issues regarding the code, feel free to contact me using the information on my profile. 
-
-          * Bullet list
-              * Nested bullet
-                  * Sub-nested bullet etc
-          * Bullet list item 2
