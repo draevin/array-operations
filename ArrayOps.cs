@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArrayOperations
 {
@@ -16,12 +12,12 @@ namespace ArrayOperations
         public int[] InitializeRandomArray(int len, int max)
         {
             int[] ar;
-            int iter = 0;            
+            int iter = 0;
             ar = new int[len];
 
             foreach (int i in ar)
             {
-                ar[iter] = rand.Next(max+1);
+                ar[iter] = rand.Next(max + 1);
                 iter++;
             }
 
@@ -32,21 +28,23 @@ namespace ArrayOperations
         {
             int r;
 
-            r = rand.Next(maxVal+1);
+            r = rand.Next(maxVal + 1);
 
             return r;
         }
 
-        public int SeqSearchB(int[] ar, int sVal)
+        public Tuple<int, int> SeqSearchB(int[] ar, int sVal)
         {
+            int compCount = 0;
             for (int index = 0; index < ar.Length; index++)
             {
-                if(ar[index] == sVal)
+                compCount++;
+                if (ar[index] == sVal)
                 {
-                    return index;
-                }                
+                    return new Tuple<int, int>(index, compCount);
+                }
             }
-            return -1;
+            return new Tuple<int, int>(-1, compCount);
         }
 
         public Tuple<int, int> SeqSearchC(int[] ar, int sVal, int occTarget)
@@ -76,13 +74,34 @@ namespace ArrayOperations
 
         }
 
+        public Tuple<int, int> BinarySearch(int[] ar, int sVal)
+        {
+            int min = 0;
+            int max = ar.Length - 1;
+            int compCount = 0;
+
+            do
+            {
+                compCount++;
+                int mid = (min + max) / 2;
+                if (sVal > ar[mid])
+                    min = mid + 1;
+                else
+                    max = mid - 1;
+                if (ar[mid] == sVal)
+                    return new Tuple<int, int>(mid, compCount);
+            } while (min <= max);
+            return new Tuple<int, int>(-1, compCount);
+        }
+
+
         public int FindMinVal(int[] ar)
         {
             int retVal = 0;
 
             for (int i = 0; i < ar.Length; i++)
             {
-                if(i == 0)
+                if (i == 0)
                 {
                     retVal = ar[i];
                 }
@@ -152,7 +171,7 @@ namespace ArrayOperations
                 else
                 {
                     output += $"{i}, ";
-                }                
+                }
             }
             Console.Write(output);
             Console.WriteLine();

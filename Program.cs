@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArrayOperations
 {
@@ -16,9 +12,9 @@ namespace ArrayOperations
             Console.Clear();
 
             AO = new ArrayOps();
-                        
+
             Menu();
-                        
+
         }
 
         static void Menu()
@@ -29,7 +25,7 @@ namespace ArrayOperations
             {
                 Console.Clear();
                 Console.WriteLine("Select an operation by the text between the (parens)");
-                Console.Write("Available Array Operations: \n  -(Seq)uential Search \n  -(Min)imum value \n  -(Max)imum value \n  -(Bub)ble sort \n  -(Exit) \n\n");
+                Console.Write("Available Array Operations: \n  -(Seq)uential Search \n  -(Bin)ary Search \n  -(Min)imum value \n  -(Max)imum value \n  -(Bub)ble sort \n  -(Exit) \n\n");
                 switch (Console.ReadLine().ToUpper())
                 {
                     case "SEQ":
@@ -38,7 +34,7 @@ namespace ArrayOperations
                             if (CheckFindFirst())
                             {
                                 SeqSearch(stored);
-                            }   
+                            }
                             else
                             {
                                 SeqSearchOcc(stored);
@@ -54,7 +50,19 @@ namespace ArrayOperations
                             {
                                 SeqSearchOcc();
                             }
-                        }                        
+                        }
+                        AnyKey();
+                        break;
+                    case "BIN":
+                        Console.WriteLine("\nThe selected array will be sorted if it is not already.");
+                        if (CheckUseStored())
+                        {
+                            BinSearch(stored);
+                        }
+                        else
+                        {
+                            BinSearch();
+                        }
                         AnyKey();
                         break;
                     case "MIN":
@@ -67,7 +75,7 @@ namespace ArrayOperations
                             MinValue();
                         }
                         AnyKey();
-                        break;                        
+                        break;
                     case "MAX":
                         if (CheckUseStored())
                         {
@@ -97,8 +105,8 @@ namespace ArrayOperations
                         break;
                 }
             } while (!exit);
-            
-                
+
+
         }
 
         static bool CheckUseStored()
@@ -126,7 +134,7 @@ namespace ArrayOperations
                             break;
                     }
                 } while (dirty);
-            }           
+            }
 
             return usingStored;
         }
@@ -156,7 +164,7 @@ namespace ArrayOperations
             } while (dirty);
 
             return findFirst;
-        }        
+        }
 
         static int SetArrayLength()
         {
@@ -166,12 +174,12 @@ namespace ArrayOperations
             {
                 Console.WriteLine("\nEnter a positive integer for array length:");
                 if (int.TryParse(Console.ReadLine(), out arLen) && arLen > 0)
-                {                   
-                    cont = true;                    
+                {
+                    cont = true;
                 }
             } while (!cont);
 
-            return arLen;        
+            return arLen;
         }
 
         static int SetArrayMax()
@@ -183,7 +191,7 @@ namespace ArrayOperations
                 Console.WriteLine("\nEnter a positive integer for the maximum value in the array:");
                 if (int.TryParse(Console.ReadLine(), out arMax) && arMax >= 0)
                 {
-                    cont = true;     
+                    cont = true;
                 }
             } while (!cont);
 
@@ -210,7 +218,7 @@ namespace ArrayOperations
         }
 
         static int SetOccurenceValue()
-        {            
+        {
             bool cont = false;
             int occ;
             do
@@ -240,7 +248,7 @@ namespace ArrayOperations
             int arLen = SetArrayLength();
             int arMax = SetArrayMax();
             int sVal = SetSearchValue();
-            int searchReturn;
+            Tuple<int, int> searchReturn;
             string searchOutput;
 
             int[] ar = AO.InitializeRandomArray(arLen, arMax);
@@ -252,13 +260,13 @@ namespace ArrayOperations
 
             searchReturn = AO.SeqSearchB(ar, sVal);
             Console.WriteLine($"The search value was {sVal}.");
-            if (searchReturn == -1)
+            if (searchReturn.Item1 == -1)
             {
                 searchOutput = "The search value was not found in the array.";
             }
             else
             {
-                searchOutput = $"The search value was first found at array index {searchReturn}.";
+                searchOutput = $"The search value was first found at array index {searchReturn.Item1}. \nThis search took {searchReturn.Item2} computations.";
             }
             Console.WriteLine($"{searchOutput}\n");
         }
@@ -266,7 +274,7 @@ namespace ArrayOperations
         static void SeqSearch(int[] ar)
         {
             int sVal = SetSearchValue();
-            int searchReturn;
+            Tuple<int, int> searchReturn;
             string searchOutput;
 
             Console.WriteLine("\nArray Values:");
@@ -274,13 +282,13 @@ namespace ArrayOperations
 
             searchReturn = AO.SeqSearchB(ar, sVal);
             Console.WriteLine($"The search value was {sVal}.");
-            if (searchReturn == -1)
+            if (searchReturn.Item1 == -1)
             {
                 searchOutput = "The search value was not found in the array.";
             }
             else
             {
-                searchOutput = $"The search value was first found at array index {searchReturn}.";
+                searchOutput = $"The search value was first found at array index {searchReturn.Item1}. \nThis search took {searchReturn.Item2} computations.";
             }
             Console.WriteLine($"{searchOutput}\n");
         }
@@ -305,10 +313,10 @@ namespace ArrayOperations
             Console.WriteLine($"The search value was {sVal}.");
             if (searchReturn.Item1 == occ)
             {
-                searchOutput = $"Occurence {occ} of the search value was found at array index {searchReturn.Item2}.";                
+                searchOutput = $"Occurence {occ} of the search value was found at array index {searchReturn.Item2}.";
             }
             else if (searchReturn.Item2 >= 0)
-            {                
+            {
                 searchOutput = $"The search value only appeared {searchReturn.Item1} times, last found at index {searchReturn.Item2}.";
             }
             else
@@ -345,13 +353,66 @@ namespace ArrayOperations
             Console.WriteLine($"{searchOutput}\n");
         }
 
+        static void BinSearch()
+        {
+            int arLen = SetArrayLength();
+            int arMax = SetArrayMax();
+            int sVal = SetSearchValue();
+            Tuple<int, int> searchReturn;
+            string searchOutput;
+
+            int[] ar = AO.InitializeRandomArray(arLen, arMax);
+            ar = AO.BubbleSort(ar);
+            stored = new int[arLen];
+            ar.CopyTo(stored, 0);
+
+            Console.WriteLine("\nSorted Random Array Values:");
+            AO.OutputArrayValues(ar);
+
+            searchReturn = AO.BinarySearch(ar, sVal);
+            Console.WriteLine($"The search value was {sVal}.");
+            if (searchReturn.Item1 == -1)
+            {
+                searchOutput = "The search value was not found in the array.";
+            }
+            else
+            {
+                searchOutput = $"The search value was first found at array index {searchReturn.Item1}. \nThis search took {searchReturn.Item2} computations.";
+            }
+            Console.WriteLine($"{searchOutput}\n");
+        }
+
+        static void BinSearch(int[] ar)
+        {
+            int sVal = SetSearchValue();
+            Tuple<int, int> searchReturn;
+            string searchOutput;
+
+            ar = AO.BubbleSort(ar);
+
+            Console.WriteLine("\nSorted Array Values:");
+            AO.OutputArrayValues(ar);
+
+            searchReturn = AO.BinarySearch(ar, sVal);
+            Console.WriteLine($"The search value was {sVal}.");
+            if (searchReturn.Item1 == -1)
+            {
+                searchOutput = "The search value was not found in the array.";
+            }
+            else
+            {
+                searchOutput = $"The search value was first found at array index {searchReturn.Item1}. \nThis search took {searchReturn.Item2} computations.";
+            }
+            Console.WriteLine($"{searchOutput}\n");
+        }
+
         static void MinValue()
         {
             int arLen = SetArrayLength();
             int arMax = SetArrayMax();
             int searchReturn;
             int minIndex;
-            
+
             int[] ar = AO.InitializeRandomArray(arLen, arMax);
             stored = new int[arLen];
             ar.CopyTo(stored, 0);
@@ -360,7 +421,7 @@ namespace ArrayOperations
             AO.OutputArrayValues(ar);
 
             searchReturn = AO.FindMinVal(ar);
-            minIndex = AO.SeqSearchB(ar, searchReturn);
+            minIndex = AO.SeqSearchB(ar, searchReturn).Item1;
             Console.WriteLine($"The minimum value in the array was {searchReturn} and can be first found at index {minIndex}.\n");
         }
 
@@ -373,7 +434,7 @@ namespace ArrayOperations
             AO.OutputArrayValues(ar);
 
             searchReturn = AO.FindMinVal(ar);
-            minIndex = AO.SeqSearchB(ar, searchReturn);
+            minIndex = AO.SeqSearchB(ar, searchReturn).Item1;
             Console.WriteLine($"The minimum value in the array was {searchReturn} and can be first found at index {minIndex}.\n");
         }
 
@@ -392,7 +453,7 @@ namespace ArrayOperations
             AO.OutputArrayValues(ar);
 
             searchReturn = AO.FindMaxVal(ar);
-            maxIndex = AO.SeqSearchB(ar, searchReturn);
+            maxIndex = AO.SeqSearchB(ar, searchReturn).Item1;
             Console.WriteLine($"The maximum value in the array was {searchReturn} and can be first found at index {maxIndex}.\n");
         }
 
@@ -405,7 +466,7 @@ namespace ArrayOperations
             AO.OutputArrayValues(ar);
 
             searchReturn = AO.FindMaxVal(ar);
-            maxIndex = AO.SeqSearchB(ar, searchReturn);
+            maxIndex = AO.SeqSearchB(ar, searchReturn).Item1;
             Console.WriteLine($"The maximum value in the array was {searchReturn} and can be first found at index {maxIndex}.\n");
         }
 
@@ -419,7 +480,7 @@ namespace ArrayOperations
             AO.OutputArrayValues(ar);
 
             stored = AO.BubbleSort(ar);
-                        
+
             Console.WriteLine("\nSorted Array Values:");
             AO.OutputArrayValues(stored);
 
