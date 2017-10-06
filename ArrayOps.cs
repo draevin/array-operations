@@ -24,6 +24,17 @@ namespace ArrayOperations
             return ar;
         }
 
+        public int[] InitializeOrderedArray(int len)
+        {
+            int[] ar = new int[len];
+            for (int i = 0; i < len; i++)
+            {
+                ar[i] = i;
+            }
+
+            return ar;
+        }
+
         public int GenerateRandomInt(int maxVal)
         {
             int r;

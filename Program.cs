@@ -25,7 +25,7 @@ namespace ArrayOperations
             {
                 Console.Clear();
                 Console.WriteLine("Select an operation by the text between the (parens)");
-                Console.Write("Available Array Operations: \n  -(Seq)uential Search \n  -(Bin)ary Search \n  -(Min)imum value \n  -(Max)imum value \n  -(Bub)ble sort \n  -(Exit) \n\n");
+                Console.Write("Available Array Operations: \n  -(Seq)uential Search \n  -(Bin)ary Search \n  -(Min)imum value \n  -(Max)imum value \n  -(Bub)ble sort \n  -(Gen)erate ordered array \n  -(Exit) \n\n");
                 switch (Console.ReadLine().ToUpper())
                 {
                     case "SEQ":
@@ -96,6 +96,10 @@ namespace ArrayOperations
                         {
                             BubbleSort();
                         }
+                        AnyKey();
+                        break;
+                    case "GEN":
+                        GenArray();
                         AnyKey();
                         break;
                     case "EXIT":
@@ -496,6 +500,18 @@ namespace ArrayOperations
 
             Console.WriteLine("\nSorted Array Values:");
             AO.OutputArrayValues(stored);
+        }
+
+        static void GenArray()
+        {
+            int arLen = SetArrayLength();
+            int[] ar = AO.InitializeOrderedArray(arLen);
+
+            stored = new int[arLen];
+            ar.CopyTo(stored, 0);
+
+            Console.WriteLine("\nArray Values:");
+            AO.OutputArrayValues(ar);
         }
     }
 }
