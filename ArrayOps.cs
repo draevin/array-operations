@@ -35,6 +35,19 @@ namespace ArrayOperations
             return ar;
         }
 
+        public int[] ParseArrayInput(string input)
+        {
+            string[] sa = input.Split(',');
+            int[] ar = new int[sa.Length];
+
+            for (int i = 0; i < sa.Length; i++)
+            {
+                ar[i] = Int32.Parse(sa[i]);
+            }
+
+            return ar;
+        }
+
         public int GenerateRandomInt(int maxVal)
         {
             int r;

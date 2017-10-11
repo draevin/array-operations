@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace ArrayOperations
 {
@@ -25,7 +26,7 @@ namespace ArrayOperations
             {
                 Console.Clear();
                 Console.WriteLine("Select an operation by the text between the (parens)");
-                Console.Write("Available Array Operations: \n  -(Seq)uential Search \n  -(Bin)ary Search \n  -(Min)imum value \n  -(Max)imum value \n  -(Bub)ble sort \n  -(Gen)erate ordered array \n  -(Exit) \n\n");
+                Console.Write("Available Array Operations: \n  -(Seq)uential Search \n  -(Bin)ary Search \n  -(Min)imum value \n  -(Max)imum value \n  -(Bub)ble sort \n  -Generate (ord)ered array \n  -Generate (spe)cified array \n  -(Exit) \n\n");
                 switch (Console.ReadLine().ToUpper())
                 {
                     case "SEQ":
@@ -98,8 +99,12 @@ namespace ArrayOperations
                         }
                         AnyKey();
                         break;
-                    case "GEN":
-                        GenArray();
+                    case "ORD":
+                        GenOrdArray();
+                        AnyKey();
+                        break;
+                    case "SPE":
+                        GenSpcArray();
                         AnyKey();
                         break;
                     case "EXIT":
@@ -377,7 +382,7 @@ namespace ArrayOperations
             Console.WriteLine($"The search value was {sVal}.");
             if (searchReturn.Item1 == -1)
             {
-                searchOutput = "The search value was not found in the array.";
+                searchOutput = $"The search value was not found in the array. \nThis search took {searchReturn.Item2} computations.";
             }
             else
             {
@@ -401,7 +406,7 @@ namespace ArrayOperations
             Console.WriteLine($"The search value was {sVal}.");
             if (searchReturn.Item1 == -1)
             {
-                searchOutput = "The search value was not found in the array.";
+                searchOutput = $"The search value was not found in the array. \nThis search took {searchReturn.Item2} computations.";
             }
             else
             {
@@ -502,7 +507,7 @@ namespace ArrayOperations
             AO.OutputArrayValues(stored);
         }
 
-        static void GenArray()
+        static void GenOrdArray()
         {
             int arLen = SetArrayLength();
             int[] ar = AO.InitializeOrderedArray(arLen);
@@ -512,6 +517,28 @@ namespace ArrayOperations
 
             Console.WriteLine("\nArray Values:");
             AO.OutputArrayValues(ar);
+        }
+
+        static void GenSpcArray()
+        {
+            bool cont = false;
+            string input = string.Empty;
+            do
+            {
+                Console.WriteLine("\nEnter your integer values as a comma-delimited list with no spaces or closing comma (i.e. 1,2,3)");
+                input = Console.ReadLine();
+                Regex r = new Regex(@"^(\d+(,\d+)*)?$");
+                switch (r.IsMatch(input))
+                {
+                    case true:
+                        stored = AO.ParseArrayInput(input);
+                        cont = true;
+                        break;
+                    case false:
+                        break;
+                }
+            }
+            while (!cont);
         }
     }
 }
