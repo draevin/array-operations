@@ -181,6 +181,191 @@ namespace ArrayOperations
             return ar;
         }
 
+        public int[] BubbleSortMod(int[] ar)
+        {
+            int length = ar.Length;
+            int counter = 0;
+            int temp;
+
+            int[] firstHalf = new int[length / 2];
+            int[] secondHalf = new int[length - firstHalf.Length];
+
+            for (int i = 0; i < firstHalf.Length; i++)
+            {
+                firstHalf[i] = ar[i];
+            }
+
+            for (int i = firstHalf.Length; i < ar.Length; i++)
+            {
+                secondHalf[counter] = ar[i];
+                counter++;
+            }
+
+            temp = firstHalf[0];
+
+            for (int i = 0; i < firstHalf.Length; i++)
+            {
+                for (int j = i + 1; j < firstHalf.Length; j++)
+                {
+                    if (firstHalf[i] < firstHalf[j])
+                    {
+                        temp = ar[j];
+                        ar[j] = ar[i];
+                        ar[i] = temp;
+                    }
+                }
+            }
+
+            for (int i = 0; i < secondHalf.Length; i++)
+            {
+                for (int j = i + 1; j < secondHalf.Length; j++)
+                {
+                    if (secondHalf[i] > secondHalf[j])
+                    {
+                        temp = ar[i];
+                        ar[i] = ar[j];
+                        ar[j] = temp;
+                    }
+                }
+            }
+
+            counter = 0;
+
+            for (int i = 0; i < firstHalf.Length; i++)
+            {
+                ar[counter] = firstHalf[i];
+                counter++;
+            }
+
+            for (int i = 0; i < secondHalf.Length; i++)
+            {
+                ar[counter] = secondHalf[i];
+                counter++;
+            }
+
+            return ar;
+        }
+
+        public string[] BubbleSort(string[] ar)
+        {
+            int length = ar.Length;
+
+            string temp = ar[0];
+
+            for (int i = 0; i < length; i++)
+            {
+                for (int j = i + 1; j < length; j++)
+                {
+                    if (ar[i].CompareTo(ar[j]) > 0)
+                    {
+                        temp = ar[i];
+
+                        ar[i] = ar[j];
+
+                        ar[j] = temp;
+                    }
+                }
+            }
+
+            return ar;
+        }
+
+        public int[] ShellSort(int[] ar)
+        {
+            int i, j, inc, temp;
+            inc = 3;
+            while (inc > 0)
+            {
+                for (i = 0; i < ar.Length; i++)
+                {
+                    j = i;
+                    temp = ar[i];
+                    while ((j >= inc) && (ar[j - inc] > temp))
+                    {
+                        ar[j] = ar[j - inc];
+                        j = j - inc;
+                    }
+                    ar[j] = temp;
+                }
+                if (inc / 2 != 0)
+                    inc = inc / 2;
+                else if (inc == 1)
+                    inc = 0;
+                else
+                    inc = 1;
+            }
+
+            return ar;
+        }
+
+        public void MergeSort(int[] ar, int low, int high)
+        {
+            if (low < high)
+            {
+                int middle = (low / 2) + (high / 2);
+                MergeSort(ar, low, middle);
+                MergeSort(ar, middle + 1, high);
+                Merge(ar, low, middle, high);
+            }
+        }
+
+        public int[] MergeSort(int[] ar)
+        {
+            MergeSort(ar, 0, ar.Length - 1);
+
+            return ar;
+        }
+
+        private void Merge(int[] ar, int low, int middle, int high)
+        {
+
+            int left = low;
+            int right = middle + 1;
+            int[] tmp = new int[(high - low) + 1];
+            int tmpIndex = 0;
+
+            while ((left <= middle) && (right <= high))
+            {
+                if (ar[left] < ar[right])
+                {
+                    tmp[tmpIndex] = ar[left];
+                    left = left + 1;
+                }
+                else
+                {
+                    tmp[tmpIndex] = ar[right];
+                    right = right + 1;
+                }
+                tmpIndex = tmpIndex + 1;
+            }
+
+            if (left <= middle)
+            {
+                while (left <= middle)
+                {
+                    tmp[tmpIndex] = ar[left];
+                    left = left + 1;
+                    tmpIndex = tmpIndex + 1;
+                }
+            }
+
+            if (right <= high)
+            {
+                while (right <= high)
+                {
+                    tmp[tmpIndex] = ar[right];
+                    right = right + 1;
+                    tmpIndex = tmpIndex + 1;
+                }
+            }
+
+            for (int i = 0; i < tmp.Length; i++)
+            {
+                ar[low + i] = tmp[i];
+            }
+
+        }
+
         public void OutputArrayValues(int[] ar)
         {
             int iter = 0;

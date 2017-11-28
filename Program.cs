@@ -26,7 +26,7 @@ namespace ArrayOperations
             {
                 Console.Clear();
                 Console.WriteLine("Select an operation by the text between the (parens)");
-                Console.Write("Available Array Operations: \n  -(Seq)uential Search \n  -(Bin)ary Search \n  -(Min)imum value \n  -(Max)imum value \n  -(Bub)ble sort \n  -Generate (ord)ered array \n  -Generate (spe)cified array \n  -(Exit) \n\n");
+                Console.Write("Available Array Operations: \n  -(Seq)uential Search \n  -(Bin)ary Search \n  -(Min)imum value \n  -(Max)imum value \n  -(Bub)ble sort \n  -(She)ll sort \n  -(Mer)ge sort \n  -(Qui)ck sort \n  -Generate (ord)ered array \n  -Generate (spe)cified array \n  -(Exit) \n\n");
                 switch (Console.ReadLine().ToUpper())
                 {
                     case "SEQ":
@@ -96,6 +96,28 @@ namespace ArrayOperations
                         else
                         {
                             BubbleSort();
+                        }
+                        AnyKey();
+                        break;
+                    case "SHE":
+                        if (CheckUseStored())
+                        {
+                            ShellSort(stored);
+                        }
+                        else
+                        {
+                            ShellSort();
+                        }
+                        AnyKey();
+                        break;
+                    case "MER":
+                        if (CheckUseStored())
+                        {
+                            MergeSort(stored);
+                        }
+                        else
+                        {
+                            MergeSort();
                         }
                         AnyKey();
                         break;
@@ -502,6 +524,58 @@ namespace ArrayOperations
             AO.OutputArrayValues(ar);
 
             stored = AO.BubbleSort(ar);
+
+            Console.WriteLine("\nSorted Array Values:");
+            AO.OutputArrayValues(stored);
+        }
+
+        static void ShellSort()
+        {
+            int arLen = SetArrayLength();
+            int arMax = SetArrayMax();
+
+            int[] ar = AO.InitializeRandomArray(arLen, arMax);
+            Console.WriteLine("\nStarting Array Values:");
+            AO.OutputArrayValues(ar);
+
+            stored = AO.ShellSort(ar);
+
+            Console.WriteLine("\nSorted Array Values:");
+            AO.OutputArrayValues(stored);
+        }
+
+        static void ShellSort(int[] ar)
+        {
+            Console.WriteLine("\nStarting Array Values:");
+            AO.OutputArrayValues(ar);
+
+            stored = AO.ShellSort(ar);
+
+            Console.WriteLine("\nSorted Array Values:");
+            AO.OutputArrayValues(stored);
+        }
+
+        static void MergeSort()
+        {
+            int arLen = SetArrayLength();
+            int arMax = SetArrayMax();
+
+            int[] ar = AO.InitializeRandomArray(arLen, arMax);
+            Console.WriteLine("\nStarting Array Values:");
+            AO.OutputArrayValues(ar);
+
+            stored = AO.MergeSort(ar);
+
+            Console.WriteLine("\nSorted Array Values:");
+            AO.OutputArrayValues(stored);
+        }
+
+        static void MergeSort(int[] ar)
+        {
+            Console.WriteLine("\nStarting Array Values:");
+            AO.OutputArrayValues(ar);
+
+            stored = AO.MergeSort(ar);
 
             Console.WriteLine("\nSorted Array Values:");
             AO.OutputArrayValues(stored);
