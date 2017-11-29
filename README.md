@@ -8,9 +8,14 @@ Description
   * Sequential search (unsorted)
     * For a given value
     * For a given occurence of a given value
+  * Binary search (sorted)
   * Minimum sequential search (unsorted)
   * Maximum sequential search (unsorted)
   * Bubble sort
+  * Shell sort
+  * Merge sort
+  * Generate ordered array (given length, value == index)
+  * Generate random array (given length and maximum value)
 
 
 Background
@@ -21,7 +26,7 @@ Background
 Controls
 --------
 
-  Menu navigation consists entirely of selection of options based on their tags provided in the (parentheses) at the beginnings of their titles and Yes/No [Y/N] questions regarding the selections. 
+  Menu navigation consists entirely of selection of options based on their tags provided in the (parentheses) in their titles and Yes/No [Y/N] questions regarding the selections. 
   
   
   
