@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace ArrayOperations
 {
     public class ArrayOps
     {
         Random rand;
+        Stopwatch sw;
         public ArrayOps()
         {
             rand = new Random();
+            sw = new Stopwatch();
         }
         public int[] InitializeRandomArray(int len, int max)
         {
@@ -17,7 +20,7 @@ namespace ArrayOperations
 
             foreach (int i in ar)
             {
-                ar[iter] = rand.Next(max + 1);
+                ar[iter] = rand.Next(max) + 1;
                 iter++;
             }
 
@@ -157,12 +160,14 @@ namespace ArrayOperations
             return retVal;
         }
 
-        public int[] BubbleSort(int[] ar)
+        public Tuple<int[], long> BubbleSort(int[] ar)
         {
-            int length = ar.Length;
+            sw.Reset();
 
+            int length = ar.Length;
             int temp = ar[0];
 
+            sw.Start();
             for (int i = 0; i < length; i++)
             {
                 for (int j = i + 1; j < length; j++)
@@ -177,81 +182,19 @@ namespace ArrayOperations
                     }
                 }
             }
+            sw.Stop();
 
-            return ar;
+            return new Tuple<int[], long>(ar, sw.ElapsedTicks);
         }
 
-        public int[] BubbleSortMod(int[] ar)
+        public Tuple<string[], long> BubbleSort(string[] ar)
         {
+            sw.Reset();
+
             int length = ar.Length;
-            int counter = 0;
-            int temp;
-
-            int[] firstHalf = new int[length / 2];
-            int[] secondHalf = new int[length - firstHalf.Length];
-
-            for (int i = 0; i < firstHalf.Length; i++)
-            {
-                firstHalf[i] = ar[i];
-            }
-
-            for (int i = firstHalf.Length; i < ar.Length; i++)
-            {
-                secondHalf[counter] = ar[i];
-                counter++;
-            }
-
-            temp = firstHalf[0];
-
-            for (int i = 0; i < firstHalf.Length; i++)
-            {
-                for (int j = i + 1; j < firstHalf.Length; j++)
-                {
-                    if (firstHalf[i] < firstHalf[j])
-                    {
-                        temp = ar[j];
-                        ar[j] = ar[i];
-                        ar[i] = temp;
-                    }
-                }
-            }
-
-            for (int i = 0; i < secondHalf.Length; i++)
-            {
-                for (int j = i + 1; j < secondHalf.Length; j++)
-                {
-                    if (secondHalf[i] > secondHalf[j])
-                    {
-                        temp = ar[i];
-                        ar[i] = ar[j];
-                        ar[j] = temp;
-                    }
-                }
-            }
-
-            counter = 0;
-
-            for (int i = 0; i < firstHalf.Length; i++)
-            {
-                ar[counter] = firstHalf[i];
-                counter++;
-            }
-
-            for (int i = 0; i < secondHalf.Length; i++)
-            {
-                ar[counter] = secondHalf[i];
-                counter++;
-            }
-
-            return ar;
-        }
-
-        public string[] BubbleSort(string[] ar)
-        {
-            int length = ar.Length;
-
             string temp = ar[0];
 
+            sw.Start();
             for (int i = 0; i < length; i++)
             {
                 for (int j = i + 1; j < length; j++)
@@ -266,14 +209,19 @@ namespace ArrayOperations
                     }
                 }
             }
+            sw.Stop();
 
-            return ar;
+            return new Tuple<string[], long>(ar, sw.ElapsedTicks);
         }
 
-        public int[] ShellSort(int[] ar)
+        public Tuple<int[], long> ShellSort(int[] ar)
         {
+            sw.Reset();
+
             int i, j, inc, temp;
             inc = 3;
+
+            sw.Start();
             while (inc > 0)
             {
                 for (i = 0; i < ar.Length; i++)
@@ -294,8 +242,9 @@ namespace ArrayOperations
                 else
                     inc = 1;
             }
+            sw.Stop();
 
-            return ar;
+            return new Tuple<int[], long>(ar, sw.ElapsedTicks);
         }
 
         public void MergeSort(int[] ar, int low, int high)
@@ -309,11 +258,15 @@ namespace ArrayOperations
             }
         }
 
-        public int[] MergeSort(int[] ar)
+        public Tuple<int[], long> MergeSort(int[] ar)
         {
-            MergeSort(ar, 0, ar.Length - 1);
+            sw.Reset();
 
-            return ar;
+            sw.Start();
+            MergeSort(ar, 0, ar.Length - 1);
+            sw.Stop();
+
+            return new Tuple<int[], long>(ar, sw.ElapsedTicks);
         }
 
         private void Merge(int[] ar, int low, int middle, int high)

@@ -26,7 +26,7 @@ namespace ArrayOperations
             {
                 Console.Clear();
                 Console.WriteLine("Select an operation by the text between the (parens)");
-                Console.Write("Available Array Operations: \n  -(Seq)uential Search \n  -(Bin)ary Search \n  -(Min)imum value \n  -(Max)imum value \n  -(Bub)ble sort \n  -(She)ll sort \n  -(Mer)ge sort \n  -(Qui)ck sort \n  -Generate (ord)ered array \n  -Generate (spe)cified array \n  -(Exit) \n\n");
+                Console.Write("Available Array Operations: \n  -(Seq)uential Search \n  -(Bin)ary Search \n  -(Min)imum value \n  -(Max)imum value \n  -(Bub)ble sort \n  -(She)ll sort \n  -(Mer)ge sort \n  -Generate (ran)dom array \n  -Generate (ord)ered array \n  -Generate (spe)cified array \n  -(Exit) \n\n");
                 switch (Console.ReadLine().ToUpper())
                 {
                     case "SEQ":
@@ -119,6 +119,10 @@ namespace ArrayOperations
                         {
                             MergeSort();
                         }
+                        AnyKey();
+                        break;
+                    case "RAN":
+                        GenRandArray();
                         AnyKey();
                         break;
                     case "ORD":
@@ -393,7 +397,7 @@ namespace ArrayOperations
             string searchOutput;
 
             int[] ar = AO.InitializeRandomArray(arLen, arMax);
-            ar = AO.BubbleSort(ar);
+            ar = AO.BubbleSort(ar).Item1;
             stored = new int[arLen];
             ar.CopyTo(stored, 0);
 
@@ -419,7 +423,7 @@ namespace ArrayOperations
             Tuple<int, int> searchReturn;
             string searchOutput;
 
-            ar = AO.BubbleSort(ar);
+            ar = AO.BubbleSort(ar).Item1;
 
             Console.WriteLine("\nSorted Array Values:");
             AO.OutputArrayValues(ar);
@@ -505,92 +509,124 @@ namespace ArrayOperations
         {
             int arLen = SetArrayLength();
             int arMax = SetArrayMax();
+            Tuple<int[], long> searchReturn;
 
             int[] ar = AO.InitializeRandomArray(arLen, arMax);
             Console.WriteLine("\nStarting Array Values:");
             AO.OutputArrayValues(ar);
 
-            stored = AO.BubbleSort(ar);
+            searchReturn = AO.BubbleSort(ar);
+            stored = searchReturn.Item1;
 
             Console.WriteLine("\nSorted Array Values:");
             AO.OutputArrayValues(stored);
 
-
+            Console.WriteLine($"\nThis operation took {searchReturn.Item2} ticks. \n");
         }
 
         static void BubbleSort(int[] ar)
         {
+            Tuple<int[], long> searchReturn;
+
             Console.WriteLine("\nStarting Array Values:");
             AO.OutputArrayValues(ar);
 
-            stored = AO.BubbleSort(ar);
+            searchReturn = AO.BubbleSort(ar);
+            stored = searchReturn.Item1;
 
             Console.WriteLine("\nSorted Array Values:");
             AO.OutputArrayValues(stored);
+
+            Console.WriteLine($"\nThis operation took {searchReturn.Item2} ticks. \n");
         }
 
         static void ShellSort()
         {
             int arLen = SetArrayLength();
             int arMax = SetArrayMax();
+            Tuple<int[], long> searchReturn;
 
             int[] ar = AO.InitializeRandomArray(arLen, arMax);
             Console.WriteLine("\nStarting Array Values:");
             AO.OutputArrayValues(ar);
 
-            stored = AO.ShellSort(ar);
+            searchReturn = AO.ShellSort(ar);
+            stored = searchReturn.Item1;
 
             Console.WriteLine("\nSorted Array Values:");
             AO.OutputArrayValues(stored);
+
+            Console.WriteLine($"\nThis operation took {searchReturn.Item2} ticks. \n");
         }
 
         static void ShellSort(int[] ar)
         {
+            Tuple<int[], long> searchReturn;
+
             Console.WriteLine("\nStarting Array Values:");
             AO.OutputArrayValues(ar);
 
-            stored = AO.ShellSort(ar);
+            searchReturn = AO.ShellSort(ar);
+            stored = searchReturn.Item1;
 
             Console.WriteLine("\nSorted Array Values:");
             AO.OutputArrayValues(stored);
+
+            Console.WriteLine($"\nThis operation took {searchReturn.Item2} ticks. \n");
         }
 
         static void MergeSort()
         {
             int arLen = SetArrayLength();
             int arMax = SetArrayMax();
+            Tuple<int[], long> searchReturn;
 
             int[] ar = AO.InitializeRandomArray(arLen, arMax);
             Console.WriteLine("\nStarting Array Values:");
             AO.OutputArrayValues(ar);
 
-            stored = AO.MergeSort(ar);
+            searchReturn = AO.MergeSort(ar);
+            stored = searchReturn.Item1;
 
             Console.WriteLine("\nSorted Array Values:");
             AO.OutputArrayValues(stored);
+
+            Console.WriteLine($"\nThis operation took {searchReturn.Item2} ticks. \n");
         }
 
         static void MergeSort(int[] ar)
         {
+            Tuple<int[], long> searchReturn;
+
             Console.WriteLine("\nStarting Array Values:");
             AO.OutputArrayValues(ar);
 
-            stored = AO.MergeSort(ar);
+            searchReturn = AO.MergeSort(ar);
+            stored = searchReturn.Item1;
 
             Console.WriteLine("\nSorted Array Values:");
+            AO.OutputArrayValues(stored);
+
+            Console.WriteLine($"\nThis operation took {searchReturn.Item2} ticks. \n");
+        }
+
+        static void GenRandArray()
+        {
+            int arLen = SetArrayLength();
+            int arMax = SetArrayMax();
+            stored = AO.InitializeRandomArray(arLen, arMax);
+
+            Console.WriteLine("\nArray Values:");
             AO.OutputArrayValues(stored);
         }
 
         static void GenOrdArray()
         {
             int arLen = SetArrayLength();
-            int[] ar = AO.InitializeOrderedArray(arLen);
-
-            stored = new int[arLen];
-            ar.CopyTo(stored, 0);
+            stored = AO.InitializeOrderedArray(arLen);
 
             Console.WriteLine("\nArray Values:");
-            AO.OutputArrayValues(ar);
+            AO.OutputArrayValues(stored);
         }
 
         static void GenSpcArray()
